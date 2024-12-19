@@ -1,0 +1,3 @@
+#!/bin/sh
+
+date | tee timestamp && git commit -am"Update: $(cat timestamp)" && parallel -j4 git push --force {} ::: $(git remote)
