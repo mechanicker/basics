@@ -1,3 +1,9 @@
 #!/bin/sh
 
-date | tee timestamp && git commit -am"Update: $(cat timestamp)" && parallel -j4 time git push --force {} ::: $(git remote)
+if [ $# -eq 0 ]; then
+    remotes=$(git remote)
+else
+    remotes=$@
+fi
+
+date | tee timestamp && git commit -am"Update: $(cat timestamp)" && parallel -j4 time git push --force {} ::: ${remotes}
